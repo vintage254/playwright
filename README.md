@@ -13,24 +13,58 @@ pnpm dev
 # or
 bun dev
 ```
+Navigate to `http://localhost:3000` for the web dashboard.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📋 Usage Examples
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### CLI Mode (Interactive)
+```bash
+node main.js
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Group Discovery Options:**
+1. Auto-discover your joined groups + search for new web dev groups
+2. Enter group URLs manually (classic mode)
 
-## Learn More
+**Target Market Selection:**
+1. All categories (maximum reach)
+2. Affiliate marketing groups
+3. Handmade crafts & DIY groups
+4. Freelancing and remote work groups
+5. E-commerce and dropshipping groups
+6. Digital marketing & SEO groups
+7. Web development & programming groups
+8. Fashion, beauty, and lifestyle groups
+9. High-value business owner groups
 
-To learn more about Next.js, take a look at the following resources:
+### Web Dashboard Mode
+1. Start the Next.js dashboard: `npm run dev`
+2. Open `http://localhost:3000`
+3. Select target market category
+4. Click "Discover Groups" to find relevant groups
+5. Configure automation settings
+6. Click "Start Automation" 
+7. Monitor progress in real-time
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Marketing Message Templates
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The system includes pre-built marketing templates for web developers:
 
-## Deploy on Vercel
+```javascript
+// Example web developer marketing post
+{
+  message: "👋 Web Developer Available!\n\n" +
+           "✅ Modern responsive websites\n" +
+           "✅ E-commerce & online stores\n" +
+           "✅ Custom web applications\n" +
+           "✅ SEO optimization\n\n" +
+           "📧 Contact me for a free consultation!\n" +
+           "#WebDevelopment #WebDesign #Freelance",
+  
+  imagePaths: ['assets/posters/web-dev-portfolio.jpg']
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Project Structure
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

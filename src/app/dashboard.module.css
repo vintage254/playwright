@@ -1,0 +1,334 @@
+/* Dashboard Styles */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header h1 {
+  color: white;
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.header p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.5rem 0 0 0;
+  font-size: 1.1rem;
+}
+
+.main {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.statusPanel {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.statusCard {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.statusCard h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.statusIndicator {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  min-width: 120px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+}
+
+.statCard:nth-child(2) {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+}
+
+.statCard:nth-child(3) {
+  background: linear-gradient(135deg, #fd79a8, #e84393);
+}
+
+.statCard:nth-child(4) {
+  background: linear-gradient(135deg, #fdcb6e, #e17055);
+}
+
+.statCard h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.controlPanel {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.controlPanel h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.configSection {
+  margin-bottom: 2rem;
+}
+
+.configSection h3 {
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.discoverButton {
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+  color: white;
+}
+
+.discoverButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(116, 185, 255, 0.4);
+}
+
+.startButton {
+  background: linear-gradient(135deg, #00b894, #00cec9);
+  color: white;
+}
+
+.startButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
+}
+
+.stopButton {
+  background: linear-gradient(135deg, #e17055, #d63031);
+  color: white;
+}
+
+.stopButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(225, 112, 85, 0.4);
+}
+
+.optionsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.checkbox input {
+  margin: 0;
+}
+
+.groupsPanel {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.groupsPanel h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.groupsList {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.groupItem {
+  padding: 0.8rem;
+  background: #f8f9fa;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.moreGroups {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.logsPanel {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.logsPanel h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.logsList {
+  max-height: 400px;
+  overflow-y: auto;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.logItem {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.logItem:last-child {
+  border-bottom: none;
+}
+
+.logTime {
+  color: #666;
+  font-size: 0.85rem;
+  min-width: 80px;
+}
+
+.logMessage {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.logItem.info {
+  color: #0984e3;
+}
+
+.logItem.warn {
+  color: #fdcb6e;
+}
+
+.logItem.error {
+  color: #e17055;
+}
+
+.logItem.success {
+  color: #00b894;
+}
+
+.emptyState {
+  color: #666;
+  text-align: center;
+  font-style: italic;
+  padding: 2rem;
+}
+
+.footer {
+  background: rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  
+  .buttonGroup {
+    gap: 0.5rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+}
