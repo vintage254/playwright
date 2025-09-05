@@ -137,6 +137,7 @@ export default function Dashboard() {
       <header className={styles.header}>
         <h1>🤖 Facebook Automation Dashboard</h1>
         <p>Educational cybersecurity & web developer marketing tool</p>
+        <p className={styles.pricing}>💰 Landing Pages • Blog Sites • E-commerce Shops • Business Portals - Starting from $50!</p>
       </header>
 
       <main className={styles.main}>

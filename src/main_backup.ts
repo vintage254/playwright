@@ -28,10 +28,10 @@ import readline from 'readline';
 
 // Simple console colors without chalk
 const colors = {
-  red: (text: string) => `\x1b[31m${text}\x1b[0m`,
+  blue: (text: string) => `\x1b[34m${text}\x1b[0m`,
   green: (text: string) => `\x1b[32m${text}\x1b[0m`,
   yellow: (text: string) => `\x1b[33m${text}\x1b[0m`,
-  blue: (text: string) => `\x1b[34m${text}\x1b[0m`,
+  red: (text: string) => `\x1b[31m${text}\x1b[0m`,
   cyan: (text: string) => `\x1b[36m${text}\x1b[0m`,
   dim: (text: string) => `\x1b[2m${text}\x1b[0m`,
   bold: {
@@ -51,9 +51,6 @@ interface AutomationConfig {
   createPosts?: boolean;
   postTemplate?: any;
   joinOptions?: any;
-  sequentialMode?: boolean;
-  categories?: any[];
-  groupsPerCategory?: number;
 }
 
 interface AutomationStats {
@@ -165,7 +162,7 @@ class FacebookAutomation {
       }
       
       // Manual login required
-      logger.info(colors.yellow('🔑 Manual login required'));
+      logger.info(colors.yellow('⚠️ Manual login required'));
       const loginSuccess = await this.sessionManager.performLogin(this.page);
       
       if (loginSuccess) {
@@ -219,13 +216,13 @@ class FacebookAutomation {
           
           if (result.success) {
             this.stats.groupsJoined++;
-            logger.info(colors.green(`✅ Successfully joined group: ${result.groupName || 'Unknown'}`));
+            logger.info(colors.green(`✅ Successfully joined group: ${result.status}`));
           } else {
             this.stats.errors++;
-            logger.error(colors.red(`❌ Failed to join group: ${result.error}`));
+            logger.error(colors.red(`❌ Failed to join group: ${result.message}`));
           }
           
-          // Delay between groups to avoid spam detection
+          // Random delay between groups to appear human
           if (i < groupUrls.length - 1) {
             await DELAYS.random(3000, 8000);
           }
@@ -269,7 +266,7 @@ class FacebookAutomation {
         }
 
         const groupUrl = groupUrls[i];
-        logger.info(colors.cyan(`📝 Processing group ${i + 1}/${groupUrls.length}: ${groupUrl}`));
+        logger.info(colors.cyan(`✍️ Creating post ${i + 1}/${groupUrls.length} in: ${groupUrl}`));
         
         // Wait for any manual interventions
         while (this.alertSystem.isWaitingForIntervention()) {
@@ -423,7 +420,7 @@ class FacebookAutomation {
    */
   async run(config: AutomationConfig) {
     // Check if this is sequential mode
-    if (config.sequentialMode) {
+    if ((config as any).sequentialMode) {
       return await this.runSequentialCategories(config);
     }
     
@@ -597,6 +594,140 @@ async function setupInteractiveSession() {
     };
   }
 }
+              { id: 'marketing', name: 'Digital marketing & SEO groups' },
+              { id: 'webdev', name: 'Web development & programming groups' },
+              { id: 'lifestyle', name: 'Fashion, beauty, and lifestyle groups' },
+              { id: 'business', name: 'High-value business owner groups' }
+            ];
+            
+            return {
+              sequentialMode: true,
+              categories: categories,
+              groupsPerCategory: 5,
+              joinGroups: true,
+              createPosts: true,
+              postTemplate: PostManager.createSampleWebDevPost(),
+              joinOptions: {
+                skipQuestions: false,
+                questionAnswers: {
+                  0: "I'm a web developer interested in joining this professional community.",
+                  1: "I specialize in modern web development and would like to connect with peers.",
+                  2: "I will follow all group rules and contribute positively to discussions."
+                }
+              }
+            };
+          }
+        } else {
+          console.log(colors.red('❌ Login failed. Falling back to manual entry.'));
+          await browser.close();
+          const groupUrlsInput = await askQuestion('Enter Facebook group URLs (comma-separated): ');
+          groupUrls = groupUrlsInput.split(',').map(url => url.trim()).filter(url => url.length > 0);
+          return await buildConfigFromManualInput(groupUrls);
+        }
+      }
+      
+      // Initialize group discovery
+      const groupDiscovery = new GroupDiscovery(page);
+      const groupSelector = new GroupSelector();
+      
+      // Get joined groups
+      console.log(colors.blue('\n📋 Discovering your joined groups...'));
+      const joinedGroups = await groupDiscovery.getJoinedGroups();
+      
+      // Ask user which category to target
+      console.log(colors.blue('\n🎯 Which market niches would you like to target?'));
+      console.log('1. All categories (maximum reach)');
+      console.log('2. Affiliate marketing groups');
+      console.log('3. Handmade crafts & DIY groups');
+      console.log('4. Freelancing and remote work groups');
+      console.log('5. E-commerce and dropshipping groups');
+      console.log('6. Digital marketing & SEO groups');
+      console.log('7. Web development & programming groups');
+      console.log('8. Fashion, beauty, and lifestyle groups');
+      console.log('9. High-value business owner groups');
+      
+      const categoryChoice = await askQuestion('\nSelect category (1-9, default: 1): ');
+      
+      let discoveredGroups = [];
+      console.log(colors.blue('\n🔍 Searching for relevant marketing groups...'));
+      
+      switch (categoryChoice) {
+        case '2':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('affiliate');
+          break;
+        case '3':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('handmade');
+          break;
+        case '4':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('freelancing');
+          break;
+        case '5':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('ecommerce');
+          break;
+        case '6':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('marketing');
+          break;
+        case '7':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('webdev');
+          break;
+        case '8':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('lifestyle');
+          break;
+        case '9':
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('business');
+          break;
+        default:
+          discoveredGroups = await groupDiscovery.getTargetMarketingGroups('all');
+      }
+      
+      // Close browser after discovery
+      await browser.close();
+      
+      // Let user select groups
+      groupUrls = await groupSelector.selectGroups(joinedGroups, discoveredGroups);
+      groupSelector.close();
+      
+      if (groupUrls.length === 0) {
+        console.log(colors.yellow('⚠️ No groups selected. Using fallback groups or manual entry.'));
+        
+        // Fallback groups for common niches
+        const fallbackGroups = [
+          'https://www.facebook.com/groups/affiliatemarketingmastery',
+          'https://www.facebook.com/groups/digitalmarketingexperts',
+          'https://www.facebook.com/groups/webdevelopersunited',
+          'https://www.facebook.com/groups/freelancersnetwork',
+          'https://www.facebook.com/groups/ecommercebusiness'
+        ];
+        
+        console.log('\n📋 Suggested fallback groups:');
+        fallbackGroups.forEach((url, index) => {
+          console.log(`${index + 1}. ${url}`);
+        });
+        
+        const useDefaults = await askQuestion('\nUse suggested groups? (y/n, default: y): ');
+        if (useDefaults.toLowerCase() !== 'n') {
+          groupUrls = fallbackGroups;
+          console.log(colors.green(`✅ Using ${fallbackGroups.length} fallback groups`));
+        } else {
+          const groupUrlsInput = await askQuestion('Enter Facebook group URLs (comma-separated): ');
+          groupUrls = groupUrlsInput.split(',').map(url => url.trim()).filter(url => url.length > 0);
+        }
+      }
+      
+    } catch (error) {
+        if (error instanceof Error) {
+            logger.error(`Group discovery failed: ${error.message}`);
+        } else {
+            logger.error(`An unknown error occurred during group discovery: ${error}`);
+        }
+      console.log(colors.red('❌ Group discovery failed. Falling back to manual entry.'));
+      const groupUrlsInput = await askQuestion('Enter Facebook group URLs (comma-separated): ');
+      groupUrls = groupUrlsInput.split(',').map(url => url.trim()).filter(url => url.length > 0);
+    }
+  }
+  
+  return await buildConfigFromManualInput(groupUrls);
+}
 
 /**
  * Build configuration from manual input
@@ -664,7 +795,7 @@ async function main() {
         ...runConfig
     };
     
-    if (!config.sequentialMode && (!config.groupUrls || config.groupUrls.length === 0)) {
+    if (!config.groupUrls || config.groupUrls.length === 0) {
       console.log(colors.yellow('⚠️ No group URLs provided. Exiting.'));
       return;
     }

@@ -190,34 +190,53 @@ class SessionManager {
         return false;
       }
 
-      // Check for common logged-in elements
+      // Check for common logged-in elements (updated selectors)
       const loggedInIndicators = [
-        '[data-testid="blue_bar"]', // Top navigation bar
-        '[role="banner"]', // Header banner
-        '[data-testid="news_feed"]', // News feed
-        '[data-testid="left_nav_menu"]' // Left navigation menu
+        '[role="navigation"]', // Main navigation
+        '[data-testid="nav-header"]', // Navigation header
+        'a[href="/"]', // Home link
+        'div[role="main"]', // Main content area
+        '[aria-label="Facebook"]', // Facebook logo
+        'div[role="banner"]', // Header banner
+        '[data-testid="left_nav_menu_list"]', // Left sidebar menu
+        'a[href*="/profile"]', // Profile link
+        'div:has-text("What\'s on your mind")', // Post composer
+        'a[href*="/friends"]', // Friends link
+        'a[href*="/groups"]', // Groups link
+        'input[placeholder*="Search Facebook"]', // Search box
+        '[role="complementary"]' // Right sidebar
       ];
 
       for (const selector of loggedInIndicators) {
         if (await VALIDATION.isElementVisible(page, selector)) {
-          logger.info('Login verification successful');
+          logger.info(`Login verified by element: ${selector}`);
           return true;
         }
       }
 
-      // Check URL patterns that indicate login
+      // Check URL patterns that indicate login (updated patterns)
       const url = page.url();
       const loggedInUrls = [
+        'facebook.com/',
         'facebook.com/home',
         'facebook.com/?sk=',
-        'facebook.com/profile'
+        'facebook.com/profile',
+        'facebook.com/feed',
+        'www.facebook.com/',
+        'www.facebook.com/home'
       ];
 
       for (const pattern of loggedInUrls) {
-        if (url.includes(pattern)) {
-          logger.info('Login verified by URL pattern');
+        if (url.includes(pattern) && !url.includes('/login')) {
+          logger.info(`Login verified by URL pattern: ${pattern}`);
           return true;
         }
+      }
+
+      // Additional check: if we're on facebook.com and NOT on login page, assume logged in
+      if (url.includes('facebook.com') && !url.includes('/login') && !url.includes('/recover')) {
+        logger.info('Login verified by being on Facebook domain (not login page)');
+        return true;
       }
 
       return false;
@@ -254,9 +273,9 @@ class SessionManager {
       console.log('The automation will continue once login is detected.');
       console.log('===============================\n');
 
-      // Wait for login completion (check every 5 seconds)
-      const maxWaitTime = 300000; // 5 minutes
-      const checkInterval = 5000; // 5 seconds
+      // Wait for login completion (check every 10 seconds)
+      const maxWaitTime = 600000; // 10 minutes
+      const checkInterval = 10000; // 10 seconds
       let waitTime = 0;
 
       while (waitTime < maxWaitTime) {
@@ -269,8 +288,8 @@ class SessionManager {
           return true;
         }
 
-        // Log progress every 30 seconds
-        if (waitTime % 30000 === 0) {
+        // Log progress every 60 seconds
+        if (waitTime % 60000 === 0) {
           console.log(`Waiting for login... (${waitTime / 1000}s elapsed)`);
         }
       }

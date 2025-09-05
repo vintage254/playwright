@@ -27,6 +27,14 @@
   font-size: 1.1rem;
 }
 
+.pricing {
+  color: #ffd93d !important;
+  font-weight: 600 !important;
+  font-size: 1.2rem !important;
+  margin: 1rem 0 0 0 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .main {
   padding: 2rem;
   display: grid;

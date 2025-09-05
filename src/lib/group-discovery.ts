@@ -60,27 +60,48 @@ export class GroupDiscovery {
       const allGroups: GroupInfo[] = [];
 
       for (const keyword of keywords) {
-        logger.info(`Searching for: ${keyword}`);
-        await this.page.goto(`https://www.facebook.com/search/groups/?q=${encodeURIComponent(keyword)}`, { waitUntil: 'networkidle' });
-        await DELAYS.long();
-        await this.scrollToLoadGroups(3);
+        try {
+          logger.info(`Searching for: ${keyword}`);
+          await this.page.goto(`https://www.facebook.com/search/groups/?q=${encodeURIComponent(keyword)}`, { 
+            waitUntil: 'networkidle',
+            timeout: 60000 // Increase timeout to 60 seconds
+          });
+          await DELAYS.long();
+          await this.scrollToLoadGroups(3);
 
-        const searchGroups = await this.extractGroupsFromSearchPage();
-        const keywordGroups = searchGroups.map(group => ({
-          ...group,
-          searchKeyword: keyword,
-          relevanceScore: this.calculateRelevanceScore(group, keyword)
-        }));
+          const searchGroups = await this.extractGroupsFromSearchPage();
+          const keywordGroups = searchGroups.map(group => ({
+            ...group,
+            searchKeyword: keyword,
+            relevanceScore: this.calculateRelevanceScore(group, keyword)
+          }));
 
-        allGroups.push(...keywordGroups);
-        await DELAYS.random(2000, 4000);
+          allGroups.push(...keywordGroups);
+          
+          // If we found groups, stop searching more keywords to avoid execution context issues
+          if (searchGroups.length > 0) {
+            logger.info(`Found ${searchGroups.length} groups for "${keyword}", stopping search to proceed with joining`);
+            break;
+          }
+          
+          await DELAYS.random(2000, 4000);
+        } catch (keywordError) {
+          logger.warn(`Failed to search for keyword "${keyword}", continuing with next keyword`);
+          continue; // Continue with next keyword instead of failing completely
+        }
       }
 
       const uniqueGroups = this.removeDuplicateGroups(allGroups);
       const sortedGroups = uniqueGroups.sort((a, b) => (b.relevanceScore || 0) - (a.relevanceScore || 0));
 
       this.discoveredGroups = sortedGroups;
-      logger.info(`✅ Discovered ${sortedGroups.length} relevant groups`);
+      
+      if (sortedGroups.length > 0) {
+        logger.info(`✅ Discovered ${sortedGroups.length} relevant groups`);
+      } else {
+        logger.warn(`⚠️ No groups discovered from search, but continuing with any previously found groups`);
+      }
+      
       return sortedGroups;
     } catch (error) {
       if (error instanceof Error) {
@@ -227,7 +248,32 @@ export class GroupDiscovery {
    */
   async extractGroupsFromSearchPage(): Promise<GroupInfo[]> {
     try {
-      const groupElements = await this.page.$$(SELECTORS.GROUPS.SEARCH_RESULT_ITEM);
+      // Add retry logic for execution context issues
+      let groupElements;
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      while (retryCount < maxRetries) {
+        try {
+          await this.page.waitForSelector(SELECTORS.GROUPS.SEARCH_RESULT_ITEM, { timeout: 5000 });
+          groupElements = await this.page.$$(SELECTORS.GROUPS.SEARCH_RESULT_ITEM);
+          break;
+        } catch (error) {
+          retryCount++;
+          if (retryCount >= maxRetries) {
+            logger.warn('Failed to find group elements after retries, returning empty array');
+            return [];
+          }
+          logger.warn(`Retry ${retryCount}/${maxRetries} for group extraction`);
+          await DELAYS.short();
+        }
+      }
+      
+      if (!groupElements || groupElements.length === 0) {
+        logger.warn('No group elements found on search page');
+        return [];
+      }
+      
       const groups: GroupInfo[] = [];
 
       for (const element of groupElements) {

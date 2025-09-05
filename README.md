@@ -54,14 +54,17 @@ The system includes pre-built marketing templates for web developers:
 // Example web developer marketing post
 {
   message: "👋 Web Developer Available!\n\n" +
-           "✅ Modern responsive websites\n" +
-           "✅ E-commerce & online stores\n" +
-           "✅ Custom web applications\n" +
-           "✅ SEO optimization\n\n" +
+           "✅ Landing Pages & Sales Funnels\n" +
+           "✅ Blog Pages & Content Management\n" +
+           "✅ E-commerce Shops & Online Stores\n" +
+           "✅ Business Portals & Dashboards\n" +
+           "✅ Custom Web Applications\n" +
+           "✅ SEO Optimization\n\n" +
+           "💰 Starting from as low as $50!\n\n" +
            "📧 Contact me for a free consultation!\n" +
-           "#WebDevelopment #WebDesign #Freelance",
+           "#WebDevelopment #LandingPages #Ecommerce #BlogDesign",
   
-  imagePaths: ['assets/posters/web-dev-portfolio.jpg']
+  imagePaths: ['public/assets/post1.jpeg', 'public/assets/post2.jpeg']
 }
 ```
 

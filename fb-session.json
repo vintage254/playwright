@@ -1,0 +1,57 @@
+{
+  "cookies": [
+    {
+      "name": "datr",
+      "value": "HV-5aGIxd3jlmz4dcZxu1VId",
+      "domain": ".facebook.com",
+      "path": "/",
+      "expires": 1791538973.482431,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "fr",
+      "value": "0AdbGjE53skcCYHsM..BouV8d..AAA.0.0.BouV8d.AWd4rRAcXCsg7jt0pll3Z0pU5gg",
+      "domain": ".facebook.com",
+      "path": "/",
+      "expires": 1764754973.48264,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sb",
+      "value": "HV-5aPyasz_3tLBCinpwWogQ",
+      "domain": ".facebook.com",
+      "path": "/",
+      "expires": 1791538973.482699,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "wd",
+      "value": "1366x768",
+      "domain": ".facebook.com",
+      "path": "/",
+      "expires": 1757583803,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "localStorage": {
+    "signal_flush_timestamp": "1756978974129",
+    "Session": "a9t6vo:1756979038615",
+    "hb_timestamp": "1756978973971",
+    "banzai:last_storage_flush": "1756978975016.7"
+  },
+  "sessionStorage": {
+    "sp_pi": "{\"pageInfo\":{\"scriptPath\":\"XWebLoginController\",\"categoryToken\":\"96e88af3\",\"extraData\":{\"imp_id\":\"1znPZMCHiNv6rgfNc\",\"ef_page\":null,\"uri\":\"https://www.facebook.com/login\"}},\"clickPoint\":null,\"time\":1756979002468}",
+    "TabId": "ixczfz"
+  },
+  "url": "https://www.facebook.com/two_step_verification/authentication/?encrypted_context=ARGRDVthi3B-d_q7eQr7WbJZhPd5cqiPe55R-clmuCC14aZzNIHr4w2XlfZrttdGjAxXdnwKFwlmgx446gczC1xh2xV2NFwf9MC-eFZlGyMI58JVBLdH84Q7xcDuyxO4WboudMWOmJXHhQvzwf_u2Q6DsJydeuSR_BOFAT4NLHNwwtdip86VeFpOFFx5-THpYNhbZ0u52J4qrWiQjlqVpLeL01Z3lw0wHCObd2nXCr2xTdz59I5CPFySig49MX_u1tcqAWS8JpmiFlw2mgRUwwDkCrqttJViZAOz28IUTd3hq1NYivPq4f_H54jD9kt3e46rqTwvriXZI2zhcl2uTCRIm5T4u1ozvUVXMm-Eq0asFl1l-lovxDHoSK2JjgGxi5F5vzPpFSe6g5rOm-dn48P5XrotvmJKW2FCQUE5YdUmHgH4s_EBvFptAIj8pO3C_3D7Fl6knFmS8iyhu1-60TdGVlM6i36T4a5stfncfCJLpkeHWMI8e-8Dx3ripkTBdaKCWr4GaA3xH-x3vVnaR959_iNRTpgIk4f3MuOC24KrSJuB_g16R0rVTS91M3zi5tuc49YTegcbf_NqIZL-FqTfTLpdOQ5jsAMANNNwtJRglhZ_HV3Nr_oquSBkW_6PG0j98vf2ZCFfJBct_fOnCP1smkVk4Kk6RplbiZF87ZmtPKTt6sBafiegFJjEWgNoEhTagUF_SQVmjQhduGShjF5zStBdb991GqXSL9iElerpJih7vxP3p_X10j8AUhhOOmyP7obfspqHbYBtsyDkugG0BW9pwo0F7j3OOWrnVaLQb3l_Jzy0ZJkjJFGHNOKUs7SCaSsYVfn2zygE71poDH_218ed1iMXaCRcL6roNIs6MIxrVk_pH5Klz8ow3BLLRWA7fP1bzVPOt-p7NSpfaIS2y-8Itlo_X22G4tMaslILQGSQaEZeQLRTZqfZM7Jwa-WAPngMU2s-GR4AWemW&flow=pre_authentication&next",
+  "timestamp": "2025-09-04T09:43:25.375Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+}

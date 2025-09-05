@@ -541,16 +541,22 @@ class PostManager {
    */
   static createSampleWebDevPost(): SamplePost {
     const messages = [
-      "🚀 Professional Web Developer Available for Projects!\n\nSpecializing in:\n✅ React & Next.js\n✅ Node.js Backend\n✅ Modern UI/UX Design\n✅ E-commerce Solutions\n\nLet's build something amazing together! 💻\n\n#WebDeveloper #React #NextJS #FreelanceDeveloper",
+      "🚀 Professional Web Developer Available for Projects!\n\nSpecializing in:\n✅ Landing Pages & Portfolios\n✅ Blog Pages & Content Sites\n✅ E-commerce Shops & Stores\n✅ Business Portals & Dashboards\n✅ React & Next.js Applications\n\n💰 Starting from as low as $50!\n\nLet's build something amazing together! 💻\n\n#WebDeveloper #LandingPages #Ecommerce #BlogDesign",
       
-      "💼 Looking to grow your business online?\n\nI create:\n🌟 Professional websites\n🌟 E-commerce platforms\n🌟 Web applications\n🌟 Mobile-responsive designs\n\nPortfolio and references available!\n\n#WebDesign #WebDevelopment #Business #OnlinePresence",
+      "💼 Looking to grow your business online?\n\nI create:\n🌟 High-Converting Landing Pages\n🌟 Professional Blog Websites\n🌟 E-commerce Shops & Online Stores\n🌟 Custom Business Portals\n🌟 Mobile-Responsive Designs\n\n💰 Affordable rates starting from just $50!\n\nPortfolio and references available!\n\n#WebDesign #Ecommerce #LandingPage #BlogDevelopment",
       
-      "🎯 Full-Stack Developer Ready for Your Next Project!\n\nServices:\n📱 Responsive Web Design\n⚡ Fast & Secure Websites\n🛒 E-commerce Development\n🔧 Website Maintenance\n\nFree consultation available! DM me 📩\n\n#FullStack #WebDev #Freelancer #TechSolutions"
+      "🎯 Full-Stack Developer Ready for Your Next Project!\n\nServices:\n📱 Landing Pages & Sales Funnels\n📝 Blog Pages & CMS Solutions\n🛒 E-commerce Shops & Payment Integration\n🏢 Business Portals & Admin Dashboards\n⚡ Fast & Secure Websites\n\n💰 Quality work starting from as low as $50!\n\nFree consultation available! DM me 📩\n\n#FullStack #EcommerceShop #Portal #BlogWebsite"
+    ];
+
+    // Use @assets alias for image paths
+    const imagePaths = [
+      path.resolve(process.cwd(), 'public/assets/post1.jpeg'),
+      path.resolve(process.cwd(), 'public/assets/post2.jpeg')
     ];
 
     return {
       message: messages[Math.floor(Math.random() * messages.length)],
-      imagePaths: [], // Will be populated with actual poster paths
+      imagePaths: imagePaths,
       waitForConfirmation: true
     };
   }
